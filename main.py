@@ -1,6 +1,7 @@
 from PyQt4 import QtCore, QtGui
 import cv2
 import numpy as np
+import os
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -21,6 +22,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(691, 504)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout_2 = QtGui.QGridLayout(self.centralwidget)
@@ -49,6 +55,14 @@ class Ui_MainWindow(object):
         self.blurFeedButton.setSizePolicy(sizePolicy)
         self.blurFeedButton.setObjectName(_fromUtf8("blurFeedButton"))
         self.horizontalLayout_14.addWidget(self.blurFeedButton)
+        self.mogFeedButton = QtGui.QPushButton(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.mogFeedButton.sizePolicy().hasHeightForWidth())
+        self.mogFeedButton.setSizePolicy(sizePolicy)
+        self.mogFeedButton.setObjectName(_fromUtf8("mogFeedButton"))
+        self.horizontalLayout_14.addWidget(self.mogFeedButton)
         self.stackedFeedButton = QtGui.QPushButton(self.centralwidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -469,6 +483,134 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addItem(spacerItem4)
         self.horizontalLayout_15.addLayout(self.verticalLayout_4)
         self.tabWidget.addTab(self.tab_stacked, _fromUtf8(""))
+        self.tab_2 = QtGui.QWidget()
+        self.tab_2.setObjectName(_fromUtf8("tab_2"))
+        self.verticalLayout_11 = QtGui.QVBoxLayout(self.tab_2)
+        self.verticalLayout_11.setObjectName(_fromUtf8("verticalLayout_11"))
+        self.verticalLayout_10 = QtGui.QVBoxLayout()
+        self.verticalLayout_10.setObjectName(_fromUtf8("verticalLayout_10"))
+        self.mogEnableCheckbox = QtGui.QCheckBox(self.tab_2)
+        self.mogEnableCheckbox.setObjectName(_fromUtf8("mogEnableCheckbox"))
+        self.verticalLayout_10.addWidget(self.mogEnableCheckbox)
+        self.horizontalLayout_25 = QtGui.QHBoxLayout()
+        self.horizontalLayout_25.setObjectName(_fromUtf8("horizontalLayout_25"))
+        self.label_16 = QtGui.QLabel(self.tab_2)
+        self.label_16.setObjectName(_fromUtf8("label_16"))
+        self.horizontalLayout_25.addWidget(self.label_16)
+        self.mogComboBox = QtGui.QComboBox(self.tab_2)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.mogComboBox.sizePolicy().hasHeightForWidth())
+        self.mogComboBox.setSizePolicy(sizePolicy)
+        self.mogComboBox.setObjectName(_fromUtf8("mogComboBox"))
+        self.mogComboBox.addItem(_fromUtf8(""))
+        self.mogComboBox.addItem(_fromUtf8(""))
+        self.mogComboBox.addItem(_fromUtf8(""))
+        self.horizontalLayout_25.addWidget(self.mogComboBox)
+        self.verticalLayout_10.addLayout(self.horizontalLayout_25)
+        spacerItem5 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_10.addItem(spacerItem5)
+        self.verticalLayout_11.addLayout(self.verticalLayout_10)
+        self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.tab_3 = QtGui.QWidget()
+        self.tab_3.setObjectName(_fromUtf8("tab_3"))
+        self.verticalLayout_13 = QtGui.QVBoxLayout(self.tab_3)
+        self.verticalLayout_13.setObjectName(_fromUtf8("verticalLayout_13"))
+        self.verticalLayout_12 = QtGui.QVBoxLayout()
+        self.verticalLayout_12.setObjectName(_fromUtf8("verticalLayout_12"))
+        self.horizontalLayout_26 = QtGui.QHBoxLayout()
+        self.horizontalLayout_26.setObjectName(_fromUtf8("horizontalLayout_26"))
+        self.cascadeEnableCheckbox = QtGui.QCheckBox(self.tab_3)
+        self.cascadeEnableCheckbox.setObjectName(_fromUtf8("cascadeEnableCheckbox"))
+        self.horizontalLayout_26.addWidget(self.cascadeEnableCheckbox)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_26)
+        self.horizontalLayout_28 = QtGui.QHBoxLayout()
+        self.horizontalLayout_28.setObjectName(_fromUtf8("horizontalLayout_28"))
+        self.cascadeFileLabel = QtGui.QLabel(self.tab_3)
+        self.cascadeFileLabel.setObjectName(_fromUtf8("cascadeFileLabel"))
+        self.horizontalLayout_28.addWidget(self.cascadeFileLabel)
+        self.cascadeOpenFile = QtGui.QPushButton(self.tab_3)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cascadeOpenFile.sizePolicy().hasHeightForWidth())
+        self.cascadeOpenFile.setSizePolicy(sizePolicy)
+        self.cascadeOpenFile.setObjectName(_fromUtf8("cascadeOpenFile"))
+        self.horizontalLayout_28.addWidget(self.cascadeOpenFile)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_28)
+        self.horizontalLayout_30 = QtGui.QHBoxLayout()
+        self.horizontalLayout_30.setObjectName(_fromUtf8("horizontalLayout_30"))
+        self.label_19 = QtGui.QLabel(self.tab_3)
+        self.label_19.setObjectName(_fromUtf8("label_19"))
+        self.horizontalLayout_30.addWidget(self.label_19)
+        self.cascadeResolutionCombo = QtGui.QComboBox(self.tab_3)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cascadeResolutionCombo.sizePolicy().hasHeightForWidth())
+        self.cascadeResolutionCombo.setSizePolicy(sizePolicy)
+        self.cascadeResolutionCombo.setObjectName(_fromUtf8("cascadeResolutionCombo"))
+        self.cascadeResolutionCombo.addItem(_fromUtf8(""))
+        self.cascadeResolutionCombo.addItem(_fromUtf8(""))
+        self.cascadeResolutionCombo.addItem(_fromUtf8(""))
+        self.cascadeResolutionCombo.addItem(_fromUtf8(""))
+        self.horizontalLayout_30.addWidget(self.cascadeResolutionCombo)
+        self.cascadeResolutionSubmit = QtGui.QPushButton(self.tab_3)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cascadeResolutionSubmit.sizePolicy().hasHeightForWidth())
+        self.cascadeResolutionSubmit.setSizePolicy(sizePolicy)
+        self.cascadeResolutionSubmit.setObjectName(_fromUtf8("cascadeResolutionSubmit"))
+        self.horizontalLayout_30.addWidget(self.cascadeResolutionSubmit)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_30)
+        self.horizontalLayout_31 = QtGui.QHBoxLayout()
+        self.horizontalLayout_31.setObjectName(_fromUtf8("horizontalLayout_31"))
+        self.label_18 = QtGui.QLabel(self.tab_3)
+        self.label_18.setObjectName(_fromUtf8("label_18"))
+        self.horizontalLayout_31.addWidget(self.label_18)
+        self.cascadeSaveNameLabel = QtGui.QLineEdit(self.tab_3)
+        self.cascadeSaveNameLabel.setText(_fromUtf8(""))
+        self.cascadeSaveNameLabel.setObjectName(_fromUtf8("cascadeSaveNameLabel"))
+        self.horizontalLayout_31.addWidget(self.cascadeSaveNameLabel)
+        self.cascadeSaveButton = QtGui.QPushButton(self.tab_3)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cascadeSaveButton.sizePolicy().hasHeightForWidth())
+        self.cascadeSaveButton.setSizePolicy(sizePolicy)
+        self.cascadeSaveButton.setObjectName(_fromUtf8("cascadeSaveButton"))
+        self.horizontalLayout_31.addWidget(self.cascadeSaveButton)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_31)
+        self.cascadeIdentifyFacesCheckbox = QtGui.QCheckBox(self.tab_3)
+        self.cascadeIdentifyFacesCheckbox.setObjectName(_fromUtf8("cascadeIdentifyFacesCheckbox"))
+        self.verticalLayout_12.addWidget(self.cascadeIdentifyFacesCheckbox)
+        spacerItem6 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_12.addItem(spacerItem6)
+        self.verticalLayout_13.addLayout(self.verticalLayout_12)
+        self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
+        self.tab_4 = QtGui.QWidget()
+        self.tab_4.setObjectName(_fromUtf8("tab_4"))
+        self.verticalLayout_15 = QtGui.QVBoxLayout(self.tab_4)
+        self.verticalLayout_15.setObjectName(_fromUtf8("verticalLayout_15"))
+        self.verticalLayout_14 = QtGui.QVBoxLayout()
+        self.verticalLayout_14.setObjectName(_fromUtf8("verticalLayout_14"))
+        self.label_17 = QtGui.QLabel(self.tab_4)
+        self.label_17.setObjectName(_fromUtf8("label_17"))
+        self.verticalLayout_14.addWidget(self.label_17)
+        self.facesListView = QtGui.QListView(self.tab_4)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.facesListView.sizePolicy().hasHeightForWidth())
+        self.facesListView.setSizePolicy(sizePolicy)
+        self.facesListView.setObjectName(_fromUtf8("facesListView"))
+        self.verticalLayout_14.addWidget(self.facesListView)
+        spacerItem7 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_14.addItem(spacerItem7)
+        self.verticalLayout_15.addLayout(self.verticalLayout_14)
+        self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.tabLayout.addWidget(self.tabWidget)
         self.gridLayout_2.addLayout(self.tabLayout, 0, 1, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -481,7 +623,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(7)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -490,6 +632,7 @@ class Ui_MainWindow(object):
         self.colorFeedButton.setText(_translate("MainWindow", "Show Colorspace", None))
         self.cannyFeedButton.setText(_translate("MainWindow", "Show Canny", None))
         self.blurFeedButton.setText(_translate("MainWindow", "Blur", None))
+        self.mogFeedButton.setText(_translate("MainWindow", "MOG", None))
         self.stackedFeedButton.setText(_translate("MainWindow", "Stacked Effect", None))
         self.videoFeed.setText(_translate("MainWindow", "Video Feed", None))
         self.colorspaceEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
@@ -505,7 +648,7 @@ class Ui_MainWindow(object):
         self.blueLowerValueLabel.setText(_translate("MainWindow", "0", None))
         self.label_10.setText(_translate("MainWindow", "Blue Upper", None))
         self.blueUpperValueLabel.setText(_translate("MainWindow", "255", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_colorspace),_translate("MainWindow", "Colorspace", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_colorspace), _translate("MainWindow", "Colorspace", None))
         self.cannyEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
         self.label_3.setText(_translate("MainWindow", "Lower", None))
         self.cannyLowerValueLabel.setText(_translate("MainWindow", "0", None))
@@ -539,7 +682,7 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "Draw on frame", None))
         self.contourDrawFramecombo.setItemText(0, _translate("MainWindow", "Default", None))
         self.contourDrawFramecombo.setItemText(1, _translate("MainWindow", "Selected", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_contour),_translate("MainWindow", "Contour", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_contour), _translate("MainWindow", "Contour", None))
         self.keypointEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
         self.keypointFileLabel.setText(_translate("MainWindow", "TextLabel", None))
         self.keypointFileSelect.setText(_translate("MainWindow", "Open File", None))
@@ -564,7 +707,28 @@ class Ui_MainWindow(object):
         self.blur_combo.setItemText(2, _translate("MainWindow", "2", None))
         self.blur_combo.setItemText(3, _translate("MainWindow", "3", None))
         self.stackedSubmitButton.setText(_translate("MainWindow", "Submit", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_stacked),_translate("MainWindow", "Stacked Effect", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_stacked), _translate("MainWindow", "Stacked Effect", None))
+        self.mogEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
+        self.label_16.setText(_translate("MainWindow", "Algorithm", None))
+        self.mogComboBox.setItemText(0, _translate("MainWindow", "MOG", None))
+        self.mogComboBox.setItemText(1, _translate("MainWindow", "MOG2", None))
+        self.mogComboBox.setItemText(2, _translate("MainWindow", "GMG", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "MOG Reduction", None))
+        self.cascadeEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
+        self.cascadeFileLabel.setText(_translate("MainWindow", "File Path", None))
+        self.cascadeOpenFile.setText(_translate("MainWindow", "Open File", None))
+        self.label_19.setText(_translate("MainWindow", "Use this if you have a old GPU", None))
+        self.cascadeResolutionCombo.setItemText(0, _translate("MainWindow", "640x480 (Default)", None))
+        self.cascadeResolutionCombo.setItemText(1, _translate("MainWindow", "320x240", None))
+        self.cascadeResolutionCombo.setItemText(2, _translate("MainWindow", "240x180", None))
+        self.cascadeResolutionCombo.setItemText(3, _translate("MainWindow", "160x120", None))
+        self.cascadeResolutionSubmit.setText(_translate("MainWindow", "Submit", None))
+        self.label_18.setText(_translate("MainWindow", "File name:", None))
+        self.cascadeSaveButton.setText(_translate("MainWindow", "Save Current Frame", None))
+        self.cascadeIdentifyFacesCheckbox.setText(_translate("MainWindow", "Identify Faces", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Cascade", None))
+        self.label_17.setText(_translate("MainWindow", "Faces", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Resources", None))
 
 import sys
 from matplotlib import pyplot as plt
@@ -582,6 +746,13 @@ blur = None
 keypoint_img = None
 frame = None
 stacked_frame = None
+MOG = None
+cascade_file = None
+saveCascadeROI = False
+cascade_resolutionX = 0
+cascade_resolutionY = 0
+fgbg_mog = cv2.BackgroundSubtractorMOG()
+fgbg_mog2 = cv2.BackgroundSubtractorMOG2()
 colorspace_stacked_order = 0
 canny_stacked_order = 1
 blur_stacked_order = 2
@@ -608,6 +779,10 @@ def getFrameToDisplay():
         image = QtGui.QImage(edges, edges.shape[1], edges.shape[0], edges.shape[1] * 3, QtGui.QImage.Format_RGB888)
     elif "blur" in lastClicked:
         image = QtGui.QImage(blur, blur.shape[1], blur.shape[0], blur.shape[1] * 3, QtGui.QImage.Format_RGB888)
+    elif "mog" in lastClicked:
+        global MOG
+        MOG = cv2.cvtColor(MOG, cv2.COLOR_GRAY2BGR)
+        image = QtGui.QImage(MOG, MOG.shape[1], MOG.shape[0], MOG.shape[1] * 3, QtGui.QImage.Format_RGB888)
     elif "stack" in lastClicked:
         filter_array = [colorspace_stacked_order, canny_stacked_order, blur_stacked_order]
         action_array = ["colorspace", "canny", "blur"]
@@ -657,6 +832,11 @@ def blur_setFeed():
     global lastClicked
     if ui.blurEnableCheckbox.isChecked() is True:
         lastClicked = "blur"
+
+def mog_setFeed():
+    global lastClicked
+    if ui.mogEnableCheckbox.isChecked() is True:
+        lastClicked = "mog"
 
 
 def color_alg(rL, rU, gL, gU, bL, bU, frame_func):
@@ -709,7 +889,6 @@ def return_blur_alg(frame_local):
 
 
 def keypoint_alg(frame_local):
-    print ""
     alg = str(ui.keypointAlgCombo.currentText())
     print alg
     # keypoint_img is the image that the object is saved to
@@ -780,6 +959,50 @@ def blur_enabled():
 def keypoint_enabled():
     if ui.keypointEnableCheckbox.isChecked() is True:
         keypoint_alg(frame)
+
+
+def mog_enabled():
+    if ui.mogEnableCheckbox.isChecked() is True:
+        alg = ui.mogComboBox.currentText()
+        global MOG
+        if "MOG" in alg:
+            MOG = fgbg_mog.apply(frame)
+        elif "MOG2" in alg:
+            MOG = fgbg_mog2.apply(frame)
+        elif "GMG" in alg:
+            print ""
+
+
+def cascade_enabled():
+    if ui.cascadeEnableCheckbox.isChecked() is True:
+        global saveCascadeROI
+        cascadeOne = cv2.CascadeClassifier(cascade_file)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = cascadeOne.detectMultiScale(gray, 1.05, 5)
+        #TODO Fix lag
+        for (x, y, w, h) in faces:
+            roi = frame[y:y + h, x:x + w]
+            roi = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
+            if saveCascadeROI is True:
+                file_name = 'face/' + str(ui.cascadeSaveNameLabel.text()) + ".jpg"
+                cv2.imwrite(file_name, roi)
+                cv2.imshow('savedImage', roi)
+                saveCascadeROI = False
+            file_index = []
+            similarity_num = []
+            if ui.cascadeIdentifyFacesCheckbox.isChecked() is True:
+                hist_roi = cv2.calcHist([roi], [0], None, [256], [0, 256])
+                for i in face_files:
+                    saved_image = cv2.imread(i, 0)
+                    hist_i = cv2.calcHist([saved_image], [0], None, [256], [0, 256])
+                    d = cv2.compareHist(hist_roi, hist_i, cv2.cv.CV_COMP_BHATTACHARYYA)
+                    #print str(i) + " : " + str(d)
+                    #print "-"*100
+                    file_index.append(i)
+                    similarity_num.append(d)
+                closest_match_index = similarity_num.index(min(similarity_num))
+                cv2.putText(frame, file_index[closest_match_index].replace("face/", ""), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
 
 def contour_enabled():
@@ -861,14 +1084,52 @@ ui.defaultFeedButton.clicked.connect(defult_setFeed)
 ui.cannyFeedButton.clicked.connect(canny_setFeed)
 ui.blurFeedButton.clicked.connect(blur_setFeed)
 ui.stackedFeedButton.clicked.connect(stacked_setFeed)
+ui.mogFeedButton.clicked.connect(mog_setFeed)
 ui.stackedSubmitButton.clicked.connect(stacked_submit)
+
 
 def select_file():
     global keypoint_img
     file_path = str(QtGui.QFileDialog.getOpenFileName())
     ui.keypointFileLabel.setText(file_path)
     keypoint_img = cv2.imread(file_path)
+
+
+def select_cascade():
+    global cascade_file
+    file_path = str(QtGui.QFileDialog.getOpenFileName())
+    ui.cascadeFileLabel.setText(file_path)
+    cascade_file = file_path
+
+
+def cascade_getResolution():
+    global cascade_resolutionX, cascade_resolutionY
+    res_selection = ui.cascadeResolutionCombo.currentText()
+    if "640x480" in res_selection:
+        cascade_resolutionX = 640
+        cascade_resolutionY = 480
+    elif "320x240" in res_selection:
+        cascade_resolutionX = 320
+        cascade_resolutionY = 240
+    elif "240x180" in res_selection:
+        cascade_resolutionX = 240
+        cascade_resolutionY = 180
+    elif "160x120" in res_selection:
+        cascade_resolutionX = 160
+        cascade_resolutionY = 120
+    cap.set(3, cascade_resolutionX)
+    cap.set(4, cascade_resolutionY)
+    cap.set(5, 30)
+
+
+def cascade_saveFile():
+    global saveCascadeROI
+    saveCascadeROI = True
+
 ui.keypointFileSelect.clicked.connect(select_file)
+ui.cascadeOpenFile.clicked.connect(select_cascade)
+ui.cascadeResolutionSubmit.clicked.connect(cascade_getResolution)
+ui.cascadeSaveButton.clicked.connect(cascade_saveFile)
 
 
 def errorhandler_functions():
@@ -891,6 +1152,10 @@ ui.colorspace_combo.connect(ui.colorspace_combo, QtCore.SIGNAL("currentIndexChan
 ui.canny_combo.connect(ui.canny_combo, QtCore.SIGNAL("currentIndexChanged(int)"), errorhandler_stacked_dupe)
 ui.blur_combo.connect(ui.blur_combo, QtCore.SIGNAL("currentIndexChanged(int)"), errorhandler_stacked_dupe)
 
+face_files = []
+for i in os.listdir('face/'):
+    face_files.append('face/' + i)
+
 while True:
     ret, frame = cap.read()
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -900,6 +1165,8 @@ while True:
     blur_enabled()
     keypoint_enabled()
     contour_enabled()
+    mog_enabled()
+    cascade_enabled()
     #errorhandler_functions()
 
     pix = QtGui.QPixmap(getFrameToDisplay())
