@@ -2,6 +2,8 @@ from PyQt4 import QtCore, QtGui
 import cv2
 import numpy as np
 import os
+import re
+from PIL import Image
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -16,7 +18,6 @@ try:
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -519,18 +520,23 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.setObjectName(_fromUtf8("verticalLayout_13"))
         self.verticalLayout_12 = QtGui.QVBoxLayout()
         self.verticalLayout_12.setObjectName(_fromUtf8("verticalLayout_12"))
-        self.horizontalLayout_26 = QtGui.QHBoxLayout()
-        self.horizontalLayout_26.setObjectName(_fromUtf8("horizontalLayout_26"))
-        self.cascadeEnableCheckbox = QtGui.QCheckBox(self.tab_3)
+        self.tabWidget_2 = QtGui.QTabWidget(self.tab_3)
+        self.tabWidget_2.setObjectName(_fromUtf8("tabWidget_2"))
+        self.tab_5 = QtGui.QWidget()
+        self.tab_5.setObjectName(_fromUtf8("tab_5"))
+        self.horizontalLayout_32 = QtGui.QHBoxLayout(self.tab_5)
+        self.horizontalLayout_32.setObjectName(_fromUtf8("horizontalLayout_32"))
+        self.verticalLayout_16 = QtGui.QVBoxLayout()
+        self.verticalLayout_16.setObjectName(_fromUtf8("verticalLayout_16"))
+        self.cascadeEnableCheckbox = QtGui.QCheckBox(self.tab_5)
         self.cascadeEnableCheckbox.setObjectName(_fromUtf8("cascadeEnableCheckbox"))
-        self.horizontalLayout_26.addWidget(self.cascadeEnableCheckbox)
-        self.verticalLayout_12.addLayout(self.horizontalLayout_26)
+        self.verticalLayout_16.addWidget(self.cascadeEnableCheckbox)
         self.horizontalLayout_28 = QtGui.QHBoxLayout()
         self.horizontalLayout_28.setObjectName(_fromUtf8("horizontalLayout_28"))
-        self.cascadeFileLabel = QtGui.QLabel(self.tab_3)
+        self.cascadeFileLabel = QtGui.QLabel(self.tab_5)
         self.cascadeFileLabel.setObjectName(_fromUtf8("cascadeFileLabel"))
         self.horizontalLayout_28.addWidget(self.cascadeFileLabel)
-        self.cascadeOpenFile = QtGui.QPushButton(self.tab_3)
+        self.cascadeOpenFile = QtGui.QPushButton(self.tab_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -538,13 +544,13 @@ class Ui_MainWindow(object):
         self.cascadeOpenFile.setSizePolicy(sizePolicy)
         self.cascadeOpenFile.setObjectName(_fromUtf8("cascadeOpenFile"))
         self.horizontalLayout_28.addWidget(self.cascadeOpenFile)
-        self.verticalLayout_12.addLayout(self.horizontalLayout_28)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_28)
         self.horizontalLayout_30 = QtGui.QHBoxLayout()
         self.horizontalLayout_30.setObjectName(_fromUtf8("horizontalLayout_30"))
-        self.label_19 = QtGui.QLabel(self.tab_3)
+        self.label_19 = QtGui.QLabel(self.tab_5)
         self.label_19.setObjectName(_fromUtf8("label_19"))
         self.horizontalLayout_30.addWidget(self.label_19)
-        self.cascadeResolutionCombo = QtGui.QComboBox(self.tab_3)
+        self.cascadeResolutionCombo = QtGui.QComboBox(self.tab_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -556,7 +562,7 @@ class Ui_MainWindow(object):
         self.cascadeResolutionCombo.addItem(_fromUtf8(""))
         self.cascadeResolutionCombo.addItem(_fromUtf8(""))
         self.horizontalLayout_30.addWidget(self.cascadeResolutionCombo)
-        self.cascadeResolutionSubmit = QtGui.QPushButton(self.tab_3)
+        self.cascadeResolutionSubmit = QtGui.QPushButton(self.tab_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -564,17 +570,32 @@ class Ui_MainWindow(object):
         self.cascadeResolutionSubmit.setSizePolicy(sizePolicy)
         self.cascadeResolutionSubmit.setObjectName(_fromUtf8("cascadeResolutionSubmit"))
         self.horizontalLayout_30.addWidget(self.cascadeResolutionSubmit)
-        self.verticalLayout_12.addLayout(self.horizontalLayout_30)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_30)
+        self.cascadeIdentifyFacesCheckbox = QtGui.QCheckBox(self.tab_5)
+        self.cascadeIdentifyFacesCheckbox.setObjectName(_fromUtf8("cascadeIdentifyFacesCheckbox"))
+        self.verticalLayout_16.addWidget(self.cascadeIdentifyFacesCheckbox)
+        self.horizontalLayout_32.addLayout(self.verticalLayout_16)
+        self.cascadeEnableCheckbox.raise_()
+        self.tabWidget_2.addTab(self.tab_5, _fromUtf8(""))
+        self.tab_6 = QtGui.QWidget()
+        self.tab_6.setObjectName(_fromUtf8("tab_6"))
+        self.verticalLayout_18 = QtGui.QVBoxLayout(self.tab_6)
+        self.verticalLayout_18.setObjectName(_fromUtf8("verticalLayout_18"))
+        self.verticalLayout_17 = QtGui.QVBoxLayout()
+        self.verticalLayout_17.setObjectName(_fromUtf8("verticalLayout_17"))
+        self.label_20 = QtGui.QLabel(self.tab_6)
+        self.label_20.setObjectName(_fromUtf8("label_20"))
+        self.verticalLayout_17.addWidget(self.label_20)
         self.horizontalLayout_31 = QtGui.QHBoxLayout()
         self.horizontalLayout_31.setObjectName(_fromUtf8("horizontalLayout_31"))
-        self.label_18 = QtGui.QLabel(self.tab_3)
+        self.label_18 = QtGui.QLabel(self.tab_6)
         self.label_18.setObjectName(_fromUtf8("label_18"))
         self.horizontalLayout_31.addWidget(self.label_18)
-        self.cascadeSaveNameLabel = QtGui.QLineEdit(self.tab_3)
+        self.cascadeSaveNameLabel = QtGui.QLineEdit(self.tab_6)
         self.cascadeSaveNameLabel.setText(_fromUtf8(""))
         self.cascadeSaveNameLabel.setObjectName(_fromUtf8("cascadeSaveNameLabel"))
         self.horizontalLayout_31.addWidget(self.cascadeSaveNameLabel)
-        self.cascadeSaveButton = QtGui.QPushButton(self.tab_3)
+        self.cascadeSaveButton = QtGui.QPushButton(self.tab_6)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -582,12 +603,51 @@ class Ui_MainWindow(object):
         self.cascadeSaveButton.setSizePolicy(sizePolicy)
         self.cascadeSaveButton.setObjectName(_fromUtf8("cascadeSaveButton"))
         self.horizontalLayout_31.addWidget(self.cascadeSaveButton)
-        self.verticalLayout_12.addLayout(self.horizontalLayout_31)
-        self.cascadeIdentifyFacesCheckbox = QtGui.QCheckBox(self.tab_3)
-        self.cascadeIdentifyFacesCheckbox.setObjectName(_fromUtf8("cascadeIdentifyFacesCheckbox"))
-        self.verticalLayout_12.addWidget(self.cascadeIdentifyFacesCheckbox)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_31)
+        self.label_21 = QtGui.QLabel(self.tab_6)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_21.sizePolicy().hasHeightForWidth())
+        self.label_21.setSizePolicy(sizePolicy)
+        self.label_21.setObjectName(_fromUtf8("label_21"))
+        self.verticalLayout_17.addWidget(self.label_21)
+        self.faceCreateTXT = QtGui.QPushButton(self.tab_6)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.faceCreateTXT.sizePolicy().hasHeightForWidth())
+        self.faceCreateTXT.setSizePolicy(sizePolicy)
+        self.faceCreateTXT.setObjectName(_fromUtf8("faceCreateTXT"))
+        self.verticalLayout_17.addWidget(self.faceCreateTXT)
+        self.horizontalLayout_35 = QtGui.QHBoxLayout()
+        self.horizontalLayout_35.setObjectName(_fromUtf8("horizontalLayout_35"))
+        self.faceFileLocation = QtGui.QLabel(self.tab_6)
+        self.faceFileLocation.setObjectName(_fromUtf8("faceFileLocation"))
+        self.horizontalLayout_35.addWidget(self.faceFileLocation)
+        self.faceOpenFile = QtGui.QPushButton(self.tab_6)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.faceOpenFile.sizePolicy().hasHeightForWidth())
+        self.faceOpenFile.setSizePolicy(sizePolicy)
+        self.faceOpenFile.setObjectName(_fromUtf8("faceOpenFile"))
+        self.horizontalLayout_35.addWidget(self.faceOpenFile)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_35)
+        self.label_22 = QtGui.QLabel(self.tab_6)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.verticalLayout_17.addWidget(self.label_22)
+        self.faceEnableCheckbox = QtGui.QCheckBox(self.tab_6)
+        self.faceEnableCheckbox.setObjectName(_fromUtf8("faceEnableCheckbox"))
+        self.verticalLayout_17.addWidget(self.faceEnableCheckbox)
         spacerItem6 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_12.addItem(spacerItem6)
+        self.verticalLayout_17.addItem(spacerItem6)
+        self.verticalLayout_18.addLayout(self.verticalLayout_17)
+        self.tabWidget_2.addTab(self.tab_6, _fromUtf8(""))
+        self.verticalLayout_12.addWidget(self.tabWidget_2)
+        self.horizontalLayout_26 = QtGui.QHBoxLayout()
+        self.horizontalLayout_26.setObjectName(_fromUtf8("horizontalLayout_26"))
+        self.verticalLayout_12.addLayout(self.horizontalLayout_26)
         self.verticalLayout_13.addLayout(self.verticalLayout_12)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.tab_4 = QtGui.QWidget()
@@ -624,6 +684,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(7)
+        self.tabWidget_2.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -723,9 +784,18 @@ class Ui_MainWindow(object):
         self.cascadeResolutionCombo.setItemText(2, _translate("MainWindow", "240x180", None))
         self.cascadeResolutionCombo.setItemText(3, _translate("MainWindow", "160x120", None))
         self.cascadeResolutionSubmit.setText(_translate("MainWindow", "Submit", None))
+        self.cascadeIdentifyFacesCheckbox.setText(_translate("MainWindow", "Identify Faces", None))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_5), _translate("MainWindow", "Cascade", None))
+        self.label_20.setText(_translate("MainWindow", "<html><head/><body><p>1) Take a screenshot of each persons face and name the file </p><p>name&lt;index&gt;.jpg. Make sure each subject has the same number of faces</p></body></html>", None))
         self.label_18.setText(_translate("MainWindow", "File name:", None))
         self.cascadeSaveButton.setText(_translate("MainWindow", "Save Current Frame", None))
-        self.cascadeIdentifyFacesCheckbox.setText(_translate("MainWindow", "Identify Faces", None))
+        self.label_21.setText(_translate("MainWindow", "<html><head/><body><p>2) Click create txt and load the file</p></body></html>", None))
+        self.faceCreateTXT.setText(_translate("MainWindow", "Create File", None))
+        self.faceFileLocation.setText(_translate("MainWindow", "File Path", None))
+        self.faceOpenFile.setText(_translate("MainWindow", "Open File", None))
+        self.label_22.setText(_translate("MainWindow", "<html><head/><body><p>3) Enable</p></body></html>", None))
+        self.faceEnableCheckbox.setText(_translate("MainWindow", "Enable", None))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_6), _translate("MainWindow", "Face Recognition", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Cascade", None))
         self.label_17.setText(_translate("MainWindow", "Faces", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Resources", None))
@@ -749,6 +819,12 @@ stacked_frame = None
 MOG = None
 cascade_file = None
 saveCascadeROI = False
+recognize_txt_path = ""
+recognizer_image = []
+recognizer_id = []
+recognizer_names = []
+#recognizer = cv2.createEigenFaceRecognizer()
+recognizer = cv2.createLBPHFaceRecognizer()
 cascade_resolutionX = 0
 cascade_resolutionY = 0
 fgbg_mog = cv2.BackgroundSubtractorMOG()
@@ -756,6 +832,8 @@ fgbg_mog2 = cv2.BackgroundSubtractorMOG2()
 colorspace_stacked_order = 0
 canny_stacked_order = 1
 blur_stacked_order = 2
+sift = cv2.SIFT()
+bf = cv2.BFMatcher()
 
 
 def stacked_submit():
@@ -984,25 +1062,23 @@ def cascade_enabled():
             roi = frame[y:y + h, x:x + w]
             roi = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
             if saveCascadeROI is True:
-                file_name = 'face/' + str(ui.cascadeSaveNameLabel.text()) + ".jpg"
-                cv2.imwrite(file_name, roi)
-                cv2.imshow('savedImage', roi)
+                file_name = 'trainerOutput/' + str(ui.cascadeSaveNameLabel.text()) + ".jpg"
+                roi_scaled = cv2.resize(roi, (200, 200))
+                roi_scaled = cv2.cvtColor(roi_scaled, cv2.COLOR_BGR2GRAY)
+                cv2.imwrite(file_name, roi_scaled)
+                cv2.imshow('savedImage', roi_scaled)
                 saveCascadeROI = False
-            file_index = []
-            similarity_num = []
-            if ui.cascadeIdentifyFacesCheckbox.isChecked() is True:
-                hist_roi = cv2.calcHist([roi], [0], None, [256], [0, 256])
-                for i in face_files:
-                    saved_image = cv2.imread(i, 0)
-                    hist_i = cv2.calcHist([saved_image], [0], None, [256], [0, 256])
-                    d = cv2.compareHist(hist_roi, hist_i, cv2.cv.CV_COMP_BHATTACHARYYA)
-                    #print str(i) + " : " + str(d)
-                    #print "-"*100
-                    file_index.append(i)
-                    similarity_num.append(d)
-                closest_match_index = similarity_num.index(min(similarity_num))
-                cv2.putText(frame, file_index[closest_match_index].replace("face/", ""), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            if ui.faceEnableCheckbox.isChecked() is True:
+                roi_scaled = cv2.resize(roi, (200, 200))
+                roi_scaled = cv2.cvtColor(roi_scaled, cv2.COLOR_BGR2GRAY)
+                nbr_predicted, conf = recognizer.predict(roi_scaled)
+                if conf <= 300:
+                    cv2.putText(frame, recognizer_names[nbr_predicted], (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+                else:
+                    cv2.putText(frame, "Unknown", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+                print nbr_predicted
+                print conf
 
 
 def contour_enabled():
@@ -1019,7 +1095,6 @@ def contour_enabled():
             res_bw = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
             ret, thresh = cv2.threshold(res_bw, 127, 255, 0)
             # image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
             #TODO Thresh or Res?
             contours, hierarchy = cv2.findContours(res_bw.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             draw_contours(res, contours, hierarchy, res)
@@ -1060,23 +1135,12 @@ def draw_contours(image, contours, hierarchy, targetFrame):
             areas = [cv2.contourArea(c) for c in contours]
             area_draw_number = int(ui.contourAreaComboBox.currentText())
             max_index_array = []
-
             for x in range(0, area_draw_number):
                 max_index = np.argmax(areas)
                 max_index_array.append(max_index)
                 cv2.drawContours(frame_draw, contours, max_index, (255, 0, 0), 3)
                 del areas[max_index]
-            print max_index_array
-            print len(contours)
-
-            # sort_area = np.sort(areas)
-            # sort_area = sort_area.argsort()[::-1]
-
-            #cnt = contours[max_index]
             cv2.drawContours(frame_draw, contours, max_index, (255, 0, 0), 3)
-            # cnt = sort_area[area_draw_number]
-            # cv2.drawContours(frame_draw, [cnt], 0, (255, 0, 0), 3)
-
         except ValueError:
             print "Draw all contours: ValueError"
 ui.colorFeedButton.clicked.connect(colorspace_setFeed)
@@ -1093,6 +1157,39 @@ def select_file():
     file_path = str(QtGui.QFileDialog.getOpenFileName())
     ui.keypointFileLabel.setText(file_path)
     keypoint_img = cv2.imread(file_path)
+
+
+def face_select_file():
+    global recognize_txt_path
+    global recognizer_image
+    global recognizer_id
+    recognize_txt_path = str(QtGui.QFileDialog.getOpenFileName())
+    ui.faceFileLocation.setText(recognize_txt_path)
+    with open(recognize_txt_path, "r") as ins:
+        image_path = []
+        for line in ins:
+            semi_index = line.index(";")
+            image_path.append(line[:semi_index])
+            recognizer_id.append(line[semi_index + 1:])
+            for x in range(0, semi_index):
+                temp = semi_index - x
+                if line[temp] == "\\":
+                    file_name = line[temp+1:semi_index]
+                    digit_index = re.search("\d", file_name)
+                    digit_index = digit_index.start()
+                    file_name = file_name[:digit_index]
+                    if file_name not in recognizer_names:
+                        recognizer_names.append(file_name)
+                    break
+        for x in range(0, len(recognizer_id)):
+            recognizer_id[x] = recognizer_id[x].replace("\n", "")
+            recognizer_id[x] = int(recognizer_id[x])
+        for file in image_path:
+            image_pil = Image.open(file).convert('L')
+            image = np.array(image_pil, 'uint8')
+            recognizer_image.append(image)
+        ins.close()
+    recognizer.train(recognizer_image, np.array(recognizer_id))
 
 
 def select_cascade():
@@ -1126,10 +1223,35 @@ def cascade_saveFile():
     global saveCascadeROI
     saveCascadeROI = True
 
+
+def all_same(items):
+    return all(x == items[0] for x in items)
+
+
+def face_createId():
+    images = os.listdir('trainerOutput/')
+    text_write = open('id.txt', 'w')
+    person_name = []
+    id = 0
+    for f in images:
+        digit_index = re.search("\d", f)
+        digit_index = digit_index.start()
+        person_name.append(f[:digit_index])
+        if all_same(person_name) is True:
+            full_path = os.path.abspath("trainerOutput/" + f)
+            text_write.write(full_path + ";" + str(id) + "\n")
+        else:
+            id += 1
+            person_name = []
+    text_write.close()
+
+
 ui.keypointFileSelect.clicked.connect(select_file)
+ui.faceOpenFile.clicked.connect(face_select_file)
 ui.cascadeOpenFile.clicked.connect(select_cascade)
 ui.cascadeResolutionSubmit.clicked.connect(cascade_getResolution)
 ui.cascadeSaveButton.clicked.connect(cascade_saveFile)
+ui.faceCreateTXT.clicked.connect(face_createId)
 
 
 def errorhandler_functions():
